@@ -5,13 +5,17 @@ using [bucket-antivirus-function](https://github.com/upsidetravel/bucket-antivir
 
 While waiting for updates on that repo you will need to use a special fork and branch:
 
- git clone git@github.com:chrisgilmerproj/bucket-antivirus-function.git
- git checkout cg_all_prs
+```sh
+git clone git@github.com:chrisgilmerproj/bucket-antivirus-function.git
+git checkout cg_all_prs
+```
 
 With that repo checked out you must run the `make` command and then copy the resulting zip file
 to AWS S3 with:
 
- aws s3 cp bucket-antivirus-function-chris/build/lambda.zip s3://lambda-builds-us-west-2/anti-virus/VERSION/anti-virus.zip
+```sh
+aws s3 cp bucket-antivirus-function-chris/build/lambda.zip s3://lambda-builds-us-west-2/anti-virus/VERSION/anti-virus.zip
+```
 
 Creates the following resources for anti-virus updates:
 
