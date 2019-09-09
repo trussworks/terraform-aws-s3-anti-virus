@@ -1,5 +1,7 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+# terraform-aws-s3-anti-virus
+
 Creates an AWS Lambda function to do anti-virus scanning of objects in AWS S3
 using [bucket-antivirus-function](https://github.com/upsidetravel/bucket-antivirus-function)
 
