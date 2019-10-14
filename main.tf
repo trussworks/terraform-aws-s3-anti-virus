@@ -35,7 +35,8 @@
  *
  * ```hcl
  * module "s3_anti_virus" {
- *   source = "../../modules/aws-s3-anti-virus"
+ *   source = "trussworks/s3-anti-virus/aws"
+ *   version = "1.0.0"
  *
  *   lambda_s3_bucket = "lambda-builds-us-west-2"
  *   lambda_version   = "1.0"
