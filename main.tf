@@ -8,15 +8,16 @@
  * While waiting for updates on that repo you will need to use a special fork and branch:
  *
  * ```sh
- * git clone git@github.com:chrisgilmerproj/bucket-antivirus-function.git
- * git checkout cg_all_prs
+ * git clone git@github.com:upsidetravel/bucket-antivirus-function.git
+ * cd bucket-antivirus-function
+ * git checkout master
  * ```
  *
  * With that repo checked out you must run the `make` command and then copy the resulting zip file
  * to AWS S3 with:
  *
  * ```sh
- * aws s3 cp bucket-antivirus-function-chris/build/lambda.zip s3://lambda-builds-us-west-2/anti-virus/VERSION/anti-virus.zip
+ * aws s3 cp bucket-antivirus-function/build/lambda.zip s3://lambda-builds-us-west-2/anti-virus/VERSION/anti-virus.zip
  * ```
  *
  * Creates the following resources for anti-virus updates:
@@ -35,7 +36,8 @@
  *
  * ```hcl
  * module "s3_anti_virus" {
- *   source = "../../modules/aws-s3-anti-virus"
+ *   source = "trussworks/s3-anti-virus/aws"
+ *   version = "1.0.0"
  *
  *   lambda_s3_bucket = "lambda-builds-us-west-2"
  *   lambda_version   = "1.0"
