@@ -50,6 +50,21 @@ data "aws_iam_policy_document" "main_update" {
 
     resources = ["arn:aws:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
+
+  statement {
+    sid = "s3HeadObject"
+
+    effect = "Allow"
+
+    actions = [
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.av_definition_s3_bucket}",
+      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+    ]
+  }
 }
 
 resource "aws_iam_role" "main_update" {
