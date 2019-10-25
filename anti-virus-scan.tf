@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:PutObjectVersionTagging",
     ]
 
-    resources = ["${formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)}"]
+    resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
 
   statement {
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "main_scan" {
       "kms:Decrypt",
     ]
 
-    resources = ["${formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)}"]
+    resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
 
   statement {
@@ -84,7 +84,7 @@ data "aws_iam_policy_document" "main_scan" {
       "sns:Publish",
     ]
 
-    resources = ["${compact(list(var.av_scan_start_sns_arn, var.av_status_sns_arn))}"]
+    resources = compact(list(var.av_scan_start_sns_arn, var.av_status_sns_arn))
   }
 }
 
