@@ -170,8 +170,6 @@ resource "aws_lambda_function" "main_scan" {
 resource "aws_lambda_permission" "main_scan" {
   count = "${length(var.av_scan_buckets)}"
 
-  statement_id = "${local.name_scan}"
-
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.main_scan.function_name}"
 
