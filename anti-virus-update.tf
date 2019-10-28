@@ -69,14 +69,14 @@ data "aws_iam_policy_document" "main_update" {
 
 resource "aws_iam_role" "main_update" {
   name               = "lambda-${local.name_update}"
-  assume_role_policy = "${data.aws_iam_policy_document.assume_role_update.json}"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_update.json
 }
 
 resource "aws_iam_role_policy" "main_update" {
   name = "lambda-${local.name_update}"
-  role = "${aws_iam_role.main_update.id}"
+  role = aws_iam_role.main_update.id
 
-  policy = "${data.aws_iam_policy_document.main_update.json}"
+  policy = data.aws_iam_policy_document.main_update.json
 }
 
 #
@@ -84,14 +84,14 @@ resource "aws_iam_role_policy" "main_update" {
 #
 
 resource "aws_cloudwatch_event_rule" "main_update" {
-  name                = "${local.name_update}"
+  name                = local.name_update
   description         = "scheduled trigger for ${local.name_update}"
   schedule_expression = "rate(${var.av_update_minutes} minutes)"
 }
 
 resource "aws_cloudwatch_event_target" "main_update" {
-  rule = "${aws_cloudwatch_event_rule.main_update.name}"
-  arn  = "${aws_lambda_function.main_update.arn}"
+  rule = aws_cloudwatch_event_rule.main_update.name
+  arn  = aws_lambda_function.main_update.arn
 }
 
 #
@@ -101,10 +101,10 @@ resource "aws_cloudwatch_event_target" "main_update" {
 resource "aws_cloudwatch_log_group" "main_update" {
   # This name must match the lambda function name and should not be changed
   name              = "/aws/lambda/${local.name_update}"
-  retention_in_days = "${var.cloudwatch_logs_retention_days}"
+  retention_in_days = var.cloudwatch_logs_retention_days
 
   tags = {
-    Name = "${local.name_update}"
+    Name = local.name_update
   }
 }
 
@@ -113,13 +113,13 @@ resource "aws_cloudwatch_log_group" "main_update" {
 #
 
 resource "aws_lambda_function" "main_update" {
-  depends_on = ["aws_cloudwatch_log_group.main_update"]
+  depends_on = [aws_cloudwatch_log_group.main_update]
 
-  s3_bucket = "${var.lambda_s3_bucket}"
+  s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
 
-  function_name = "${local.name_update}"
-  role          = "${aws_iam_role.main_update.arn}"
+  function_name = local.name_update
+  role          = aws_iam_role.main_update.arn
   handler       = "update.lambda_handler"
   runtime       = "python2.7"
   memory_size   = "512"
@@ -127,22 +127,23 @@ resource "aws_lambda_function" "main_update" {
 
   environment {
     variables = {
-      AV_DEFINITION_S3_BUCKET = "${var.av_definition_s3_bucket}"
-      AV_DEFINITION_S3_PREFIX = "${var.av_definition_s3_prefix}"
+      AV_DEFINITION_S3_BUCKET = var.av_definition_s3_bucket
+      AV_DEFINITION_S3_PREFIX = var.av_definition_s3_prefix
     }
   }
 
   tags = {
-    Name = "${local.name_update}"
+    Name = local.name_update
   }
 }
 
 resource "aws_lambda_permission" "main_update" {
-  statement_id = "${local.name_update}"
+  statement_id = local.name_update
 
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.main_update.function_name}"
+  function_name = aws_lambda_function.main_update.function_name
 
   principal  = "events.amazonaws.com"
-  source_arn = "${aws_cloudwatch_event_rule.main_update.arn}"
+  source_arn = aws_cloudwatch_event_rule.main_update.arn
 }
+

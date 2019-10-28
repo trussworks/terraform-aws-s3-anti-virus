@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:PutObjectVersionTagging",
     ]
 
-    resources = ["${formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)}"]
+    resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
 
   statement {
@@ -64,6 +64,21 @@ data "aws_iam_policy_document" "main_scan" {
   }
 
   statement {
+    sid = "s3HeadObject"
+
+    effect = "Allow"
+
+    actions = [
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.av_definition_s3_bucket}",
+      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+    ]
+  }
+
+  statement {
     sid = "kmsDecrypt"
 
     effect = "Allow"
@@ -72,7 +87,7 @@ data "aws_iam_policy_document" "main_scan" {
       "kms:Decrypt",
     ]
 
-    resources = ["${formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)}"]
+    resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
 
   statement {
@@ -84,20 +99,20 @@ data "aws_iam_policy_document" "main_scan" {
       "sns:Publish",
     ]
 
-    resources = ["${compact(list(var.av_scan_start_sns_arn, var.av_status_sns_arn))}"]
+    resources = compact([var.av_scan_start_sns_arn, var.av_status_sns_arn])
   }
 }
 
 resource "aws_iam_role" "main_scan" {
   name               = "lambda-${local.name_scan}"
-  assume_role_policy = "${data.aws_iam_policy_document.assume_role_scan.json}"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_scan.json
 }
 
 resource "aws_iam_role_policy" "main_scan" {
   name = "lambda-${local.name_scan}"
-  role = "${aws_iam_role.main_scan.id}"
+  role = aws_iam_role.main_scan.id
 
-  policy = "${data.aws_iam_policy_document.main_scan.json}"
+  policy = data.aws_iam_policy_document.main_scan.json
 }
 
 #
@@ -105,17 +120,17 @@ resource "aws_iam_role_policy" "main_scan" {
 #
 
 data "aws_s3_bucket" "main_scan" {
-  count  = "${length(var.av_scan_buckets)}"
-  bucket = "${var.av_scan_buckets[count.index]}"
+  count  = length(var.av_scan_buckets)
+  bucket = var.av_scan_buckets[count.index]
 }
 
 resource "aws_s3_bucket_notification" "main_scan" {
-  count  = "${length(var.av_scan_buckets)}"
-  bucket = "${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
+  count  = length(var.av_scan_buckets)
+  bucket = element(data.aws_s3_bucket.main_scan.*.id, count.index)
 
   lambda_function {
-    id                  = "${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
-    lambda_function_arn = "${aws_lambda_function.main_scan.arn}"
+    id                  = element(data.aws_s3_bucket.main_scan.*.id, count.index)
+    lambda_function_arn = aws_lambda_function.main_scan.arn
     events              = ["s3:ObjectCreated:*"]
   }
 }
@@ -127,10 +142,10 @@ resource "aws_s3_bucket_notification" "main_scan" {
 resource "aws_cloudwatch_log_group" "main_scan" {
   # This name must match the lambda function name and should not be changed
   name              = "/aws/lambda/${local.name_scan}"
-  retention_in_days = "${var.cloudwatch_logs_retention_days}"
+  retention_in_days = var.cloudwatch_logs_retention_days
 
   tags = {
-    Name = "${local.name_scan}"
+    Name = local.name_scan
   }
 }
 
@@ -139,13 +154,13 @@ resource "aws_cloudwatch_log_group" "main_scan" {
 #
 
 resource "aws_lambda_function" "main_scan" {
-  depends_on = ["aws_cloudwatch_log_group.main_scan"]
+  depends_on = [aws_cloudwatch_log_group.main_scan]
 
-  s3_bucket = "${var.lambda_s3_bucket}"
+  s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
 
-  function_name = "${local.name_scan}"
-  role          = "${aws_iam_role.main_scan.arn}"
+  function_name = local.name_scan
+  role          = aws_iam_role.main_scan.arn
   handler       = "scan.lambda_handler"
   runtime       = "python2.7"
   memory_size   = "1024"
@@ -153,30 +168,31 @@ resource "aws_lambda_function" "main_scan" {
 
   environment {
     variables = {
-      AV_DEFINITION_S3_BUCKET        = "${var.av_definition_s3_bucket}"
-      AV_DEFINITION_S3_PREFIX        = "${var.av_definition_s3_prefix}"
-      AV_SCAN_START_SNS_ARN          = "${var.av_scan_start_sns_arn}"
-      AV_STATUS_SNS_ARN              = "${var.av_status_sns_arn}"
-      AV_STATUS_SNS_PUBLISH_CLEAN    = "${var.av_status_sns_publish_clean}"
-      AV_STATUS_SNS_PUBLISH_INFECTED = "${var.av_status_sns_publish_infected}"
+      AV_DEFINITION_S3_BUCKET        = var.av_definition_s3_bucket
+      AV_DEFINITION_S3_PREFIX        = var.av_definition_s3_prefix
+      AV_SCAN_START_SNS_ARN          = var.av_scan_start_sns_arn
+      AV_STATUS_SNS_ARN              = var.av_status_sns_arn
+      AV_STATUS_SNS_PUBLISH_CLEAN    = var.av_status_sns_publish_clean
+      AV_STATUS_SNS_PUBLISH_INFECTED = var.av_status_sns_publish_infected
     }
   }
 
   tags = {
-    Name = "${local.name_scan}"
+    Name = local.name_scan
   }
 }
 
 resource "aws_lambda_permission" "main_scan" {
-  count = "${length(var.av_scan_buckets)}"
+  count = length(var.av_scan_buckets)
 
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.main_scan.function_name}"
+  function_name = aws_lambda_function.main_scan.function_name
 
   principal = "s3.amazonaws.com"
 
-  source_account = "${data.aws_caller_identity.current.account_id}"
-  source_arn     = "${element(data.aws_s3_bucket.main_scan.*.arn, count.index)}"
+  source_account = data.aws_caller_identity.current.account_id
+  source_arn     = element(data.aws_s3_bucket.main_scan.*.arn, count.index)
 
   statement_id = "${local.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
 }
+
