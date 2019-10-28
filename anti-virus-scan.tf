@@ -64,6 +64,21 @@ data "aws_iam_policy_document" "main_scan" {
   }
 
   statement {
+    sid = "s3HeadObject"
+
+    effect = "Allow"
+
+    actions = [
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.av_definition_s3_bucket}",
+      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+    ]
+  }
+
+  statement {
     sid = "kmsDecrypt"
 
     effect = "Allow"
