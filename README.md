@@ -1,4 +1,3 @@
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 # terraform-aws-s3-anti-virus
 
@@ -53,13 +52,14 @@ module "s3_anti_virus" {
 }
 ```
 
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | av\_definition\_s3\_bucket | Bucket containing antivirus databse files. | string | n/a | yes |
 | av\_definition\_s3\_prefix | Prefix for antivirus databse files. | string | `"clamav_defs"` | no |
-| av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | list | n/a | yes |
+| av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | list(string) | n/a | yes |
 | av\_scan\_start\_sns\_arn | SNS topic ARN to publish notification about start of scan (optional). | string | `""` | no |
 | av\_status\_sns\_arn | SNS topic ARN to publish scan results (optional). | string | `""` | no |
 | av\_status\_sns\_publish\_clean | Publish AV_STATUS_CLEAN results to AV_STATUS_SNS_ARN. | string | `"True"` | no |

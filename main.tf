@@ -59,5 +59,9 @@ locals {
   name_update = "s3-anti-virus-updates"
 }
 
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
+data "aws_region" "current" {
+}
+
+data "aws_caller_identity" "current" {
+}
+
