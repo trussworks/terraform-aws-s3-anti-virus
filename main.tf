@@ -37,10 +37,10 @@
  * ```hcl
  * module "s3_anti_virus" {
  *   source = "trussworks/s3-anti-virus/aws"
- *   version = "1.0.0"
+ *   version = "2.0.0"
  *
  *   lambda_s3_bucket = "lambda-builds-us-west-2"
- *   lambda_version   = "1.0"
+ *   lambda_version   = "2.0.0"
  *   lambda_package   = "anti-virus"
  *
  *   av_update_minutes = "180"
