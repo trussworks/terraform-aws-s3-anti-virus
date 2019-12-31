@@ -9,15 +9,18 @@ While waiting for updates on that repo you will need to use a special fork and b
 ```sh
 git clone git@github.com:upsidetravel/bucket-antivirus-function.git
 cd bucket-antivirus-function
-git checkout master
+git checkout v2.0.0
 ```
 
 With that repo checked out you must run the `make` command and then copy the resulting zip file
 to AWS S3 with:
 
 ```sh
-aws s3 cp bucket-antivirus-function/build/lambda.zip s3://lambda-builds-us-west-2/anti-virus/VERSION/anti-virus.zip
+VERSION=2.0.0
+aws s3 cp bucket-antivirus-function/build/lambda.zip "s3://lambda-builds-us-west-2/anti-virus/${VERSION}/anti-virus.zip"
 ```
+
+NOTE: It is a good idea to make `VERSION` match the git tag you are deploying.
 
 Creates the following resources for anti-virus updates:
 
@@ -42,10 +45,10 @@ Terraform 0.11. Pin module version to ~> 1.1.1. Submit pull-requests to terrafor
 ```hcl
 module "s3_anti_virus" {
   source = "trussworks/s3-anti-virus/aws"
-  version = "1.0.0"
+  version = "2.0.0"
 
   lambda_s3_bucket = "lambda-builds-us-west-2"
-  lambda_version   = "1.0"
+  lambda_version   = "2.0.0"
   lambda_package   = "anti-virus"
 
   av_update_minutes = "180"

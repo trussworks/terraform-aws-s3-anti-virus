@@ -163,7 +163,7 @@ resource "aws_lambda_function" "main_scan" {
   function_name = local.name_scan
   role          = aws_iam_role.main_scan.arn
   handler       = "scan.lambda_handler"
-  runtime       = "python2.7"
+  runtime       = "python3.7"
   memory_size   = "1024"
   timeout       = "300"
 
