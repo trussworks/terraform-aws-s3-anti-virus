@@ -1,3 +1,15 @@
+variable "name_scan" {
+  default     = "s3-anti-virus-scan"
+  description = "Name for resources associated with anti-virus scanning"
+  type        = string
+}
+
+variable "name_update" {
+  default     = "s3-anti-virus-updates"
+  description = "Name for resources associated with anti-virus updateing"
+  type        = string
+}
+
 variable "cloudwatch_logs_retention_days" {
   default     = 90
   description = "Number of days to keep logs in AWS CloudWatch."

@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_scan" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${local.name_scan}:*"]
+    resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
   }
 
   statement {
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:GetObjectTagging",
     ]
 
-    resources = ["arn:aws:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
+    resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
 
   statement {
@@ -74,8 +74,8 @@ data "aws_iam_policy_document" "main_scan" {
     ]
 
     resources = [
-      "arn:aws:s3:::${var.av_definition_s3_bucket}",
-      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/*",
     ]
   }
 
@@ -105,12 +105,12 @@ data "aws_iam_policy_document" "main_scan" {
 }
 
 resource "aws_iam_role" "main_scan" {
-  name               = "lambda-${local.name_scan}"
+  name               = "lambda-${var.name_scan}"
   assume_role_policy = data.aws_iam_policy_document.assume_role_scan.json
 }
 
 resource "aws_iam_role_policy" "main_scan" {
-  name = "lambda-${local.name_scan}"
+  name = "lambda-${var.name_scan}"
   role = aws_iam_role.main_scan.id
 
   policy = data.aws_iam_policy_document.main_scan.json
@@ -142,11 +142,11 @@ resource "aws_s3_bucket_notification" "main_scan" {
 
 resource "aws_cloudwatch_log_group" "main_scan" {
   # This name must match the lambda function name and should not be changed
-  name              = "/aws/lambda/${local.name_scan}"
+  name              = "/aws/lambda/${var.name_scan}"
   retention_in_days = var.cloudwatch_logs_retention_days
 
   tags = {
-    Name = local.name_scan
+    Name = var.name_scan
   }
 }
 
@@ -160,7 +160,7 @@ resource "aws_lambda_function" "main_scan" {
   s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
 
-  function_name = local.name_scan
+  function_name = var.name_scan
   role          = aws_iam_role.main_scan.arn
   handler       = "scan.lambda_handler"
   runtime       = "python3.7"
@@ -179,7 +179,7 @@ resource "aws_lambda_function" "main_scan" {
   }
 
   tags = {
-    Name = local.name_scan
+    Name = var.name_scan
   }
 }
 
@@ -194,6 +194,6 @@ resource "aws_lambda_permission" "main_scan" {
   source_account = data.aws_caller_identity.current.account_id
   source_arn     = element(data.aws_s3_bucket.main_scan.*.arn, count.index)
 
-  statement_id = "${local.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
+  statement_id = "${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
 }
 
