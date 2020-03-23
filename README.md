@@ -47,6 +47,9 @@ module "s3_anti_virus" {
   source = "trussworks/s3-anti-virus/aws"
   version = "2.0.0"
 
+  name_scan   = "s3-anti-virus-scan"
+  name_update = "s3-anti-virus-updates"
+
   lambda_s3_bucket = "lambda-builds-us-west-2"
   lambda_version   = "2.0.0"
   lambda_package   = "anti-virus"
@@ -62,21 +65,33 @@ module "s3_anti_virus" {
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| av\_definition\_s3\_bucket | Bucket containing antivirus databse files. | string | n/a | yes |
-| av\_definition\_s3\_prefix | Prefix for antivirus databse files. | string | `"clamav_defs"` | no |
-| av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | list(string) | n/a | yes |
-| av\_scan\_start\_sns\_arn | SNS topic ARN to publish notification about start of scan (optional). | string | `""` | no |
-| av\_status\_sns\_arn | SNS topic ARN to publish scan results (optional). | string | `""` | no |
-| av\_status\_sns\_publish\_clean | Publish AV_STATUS_CLEAN results to AV_STATUS_SNS_ARN. | string | `"True"` | no |
-| av\_status\_sns\_publish\_infected | Publish AV_STATUS_INFECTED results to AV_STATUS_SNS_ARN. | string | `"True"` | no |
-| av\_update\_minutes | How often to download updated Anti-Virus databases. | string | `"180"` | no |
-| cloudwatch\_logs\_retention\_days | Number of days to keep logs in AWS CloudWatch. | string | `"90"` | no |
-| lambda\_package | The name of the lambda package. Used for a directory tree and zip file. | string | `"anti-virus"` | no |
-| lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | string | n/a | yes |
-| lambda\_version | The version the Lambda function to deploy. | string | n/a | yes |
+|------|-------------|------|---------|:-----:|
+| av\_definition\_s3\_bucket | Bucket containing antivirus databse files. | `string` | n/a | yes |
+| av\_definition\_s3\_prefix | Prefix for antivirus databse files. | `string` | `"clamav_defs"` | no |
+| av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
+| av\_scan\_start\_sns\_arn | SNS topic ARN to publish notification about start of scan (optional). | `string` | `""` | no |
+| av\_status\_sns\_arn | SNS topic ARN to publish scan results (optional). | `string` | `""` | no |
+| av\_status\_sns\_publish\_clean | Publish AV\_STATUS\_CLEAN results to AV\_STATUS\_SNS\_ARN. | `string` | `"True"` | no |
+| av\_status\_sns\_publish\_infected | Publish AV\_STATUS\_INFECTED results to AV\_STATUS\_SNS\_ARN. | `string` | `"True"` | no |
+| av\_update\_minutes | How often to download updated Anti-Virus databases. | `string` | `180` | no |
+| cloudwatch\_logs\_retention\_days | Number of days to keep logs in AWS CloudWatch. | `string` | `90` | no |
+| lambda\_package | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
+| lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
+| lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
+| name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
+| name\_update | Name for resources associated with anti-virus updateing | `string` | `"s3-anti-virus-updates"` | no |
+
+## Outputs
+
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
