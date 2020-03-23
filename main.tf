@@ -39,6 +39,9 @@
  *   source = "trussworks/s3-anti-virus/aws"
  *   version = "2.0.0"
  *
+ *   name_scan   = "s3-anti-virus-scan"
+ *   name_update = "s3-anti-virus-updates"
+ *
  *   lambda_s3_bucket = "lambda-builds-us-west-2"
  *   lambda_version   = "2.0.0"
  *   lambda_package   = "anti-virus"
@@ -54,14 +57,11 @@
  * ```
  */
 
-locals {
-  name_scan   = "s3-anti-virus-scan"
-  name_update = "s3-anti-virus-updates"
-}
+# The AWS region currently being used.
+data "aws_region" "current" {}
 
-data "aws_region" "current" {
-}
+# The AWS account id
+data "aws_caller_identity" "current" {}
 
-data "aws_caller_identity" "current" {
-}
-
+# The AWS partition (commercial or govcloud)
+data "aws_partition" "current" {}

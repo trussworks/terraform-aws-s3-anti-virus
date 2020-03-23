@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_update" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${local.name_update}:*"]
+    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_update}:*"]
   }
 
   statement {
@@ -68,12 +68,12 @@ data "aws_iam_policy_document" "main_update" {
 }
 
 resource "aws_iam_role" "main_update" {
-  name               = "lambda-${local.name_update}"
+  name               = "lambda-${var.name_update}"
   assume_role_policy = data.aws_iam_policy_document.assume_role_update.json
 }
 
 resource "aws_iam_role_policy" "main_update" {
-  name = "lambda-${local.name_update}"
+  name = "lambda-${var.name_update}"
   role = aws_iam_role.main_update.id
 
   policy = data.aws_iam_policy_document.main_update.json
@@ -84,8 +84,8 @@ resource "aws_iam_role_policy" "main_update" {
 #
 
 resource "aws_cloudwatch_event_rule" "main_update" {
-  name                = local.name_update
-  description         = "scheduled trigger for ${local.name_update}"
+  name                = var.name_update
+  description         = "scheduled trigger for ${var.name_update}"
   schedule_expression = "rate(${var.av_update_minutes} minutes)"
 }
 
@@ -100,11 +100,11 @@ resource "aws_cloudwatch_event_target" "main_update" {
 
 resource "aws_cloudwatch_log_group" "main_update" {
   # This name must match the lambda function name and should not be changed
-  name              = "/aws/lambda/${local.name_update}"
+  name              = "/aws/lambda/${var.name_update}"
   retention_in_days = var.cloudwatch_logs_retention_days
 
   tags = {
-    Name = local.name_update
+    Name = var.name_update
   }
 }
 
@@ -118,7 +118,7 @@ resource "aws_lambda_function" "main_update" {
   s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
 
-  function_name = local.name_update
+  function_name = var.name_update
   role          = aws_iam_role.main_update.arn
   handler       = "update.lambda_handler"
   runtime       = "python3.7"
@@ -133,12 +133,12 @@ resource "aws_lambda_function" "main_update" {
   }
 
   tags = {
-    Name = local.name_update
+    Name = var.name_update
   }
 }
 
 resource "aws_lambda_permission" "main_update" {
-  statement_id = local.name_update
+  statement_id = var.name_update
 
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.main_update.function_name
