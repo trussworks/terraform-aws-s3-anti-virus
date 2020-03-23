@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_update" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_update}:*"]
+    resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_update}:*"]
   }
 
   statement {
@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "main_update" {
       "s3:PutObjectVersionTagging",
     ]
 
-    resources = ["arn:aws:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
+    resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
 
   statement {
@@ -61,8 +61,8 @@ data "aws_iam_policy_document" "main_update" {
     ]
 
     resources = [
-      "arn:aws:s3:::${var.av_definition_s3_bucket}",
-      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/*",
     ]
   }
 }

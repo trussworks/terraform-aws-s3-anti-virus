@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_scan" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
+    resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
   }
 
   statement {
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:GetObjectTagging",
     ]
 
-    resources = ["arn:aws:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
+    resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
 
   statement {
@@ -74,8 +74,8 @@ data "aws_iam_policy_document" "main_scan" {
     ]
 
     resources = [
-      "arn:aws:s3:::${var.av_definition_s3_bucket}",
-      "arn:aws:s3:::${var.av_definition_s3_bucket}/*",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}",
+      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/*",
     ]
   }
 
