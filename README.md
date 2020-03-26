@@ -89,6 +89,7 @@ module "s3_anti_virus" {
 | lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
 | name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | name\_update | Name for resources associated with anti-virus updateing | `string` | `"s3-anti-virus-updates"` | no |
+| tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 
 ## Outputs
 

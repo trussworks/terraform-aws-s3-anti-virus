@@ -43,6 +43,12 @@ variable "av_scan_buckets" {
   type        = list(string)
 }
 
+variable "tags" {
+  description = "A map of tags to add to all resources."
+  type        = map(string)
+  default     = {}
+}
+
 #
 # The variables below correspond to https://github.com/upsidetravel/bucket-antivirus-function/tree/master#configuration
 #
@@ -80,4 +86,3 @@ variable "av_status_sns_publish_infected" {
   type        = string
   default     = "True"
 }
-
