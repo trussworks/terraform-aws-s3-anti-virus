@@ -75,8 +75,8 @@ module "s3_anti_virus" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| av\_definition\_s3\_bucket | Bucket containing antivirus databse files. | `string` | n/a | yes |
-| av\_definition\_s3\_prefix | Prefix for antivirus databse files. | `string` | `"clamav_defs"` | no |
+| av\_definition\_s3\_bucket | Bucket containing antivirus database files. | `string` | n/a | yes |
+| av\_definition\_s3\_prefix | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
 | av\_scan\_start\_sns\_arn | SNS topic ARN to publish notification about start of scan (optional). | `string` | `""` | no |
 | av\_status\_sns\_arn | SNS topic ARN to publish scan results (optional). | `string` | `""` | no |
@@ -88,7 +88,7 @@ module "s3_anti_virus" {
 | lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
 | lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
 | name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
-| name\_update | Name for resources associated with anti-virus updateing | `string` | `"s3-anti-virus-updates"` | no |
+| name\_update | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 
 ## Outputs

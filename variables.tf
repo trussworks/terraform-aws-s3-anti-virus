@@ -6,7 +6,7 @@ variable "name_scan" {
 
 variable "name_update" {
   default     = "s3-anti-virus-updates"
-  description = "Name for resources associated with anti-virus updateing"
+  description = "Name for resources associated with anti-virus updating"
   type        = string
 }
 
@@ -53,12 +53,12 @@ variable "tags" {
 # The variables below correspond to https://github.com/upsidetravel/bucket-antivirus-function/tree/master#configuration
 #
 variable "av_definition_s3_bucket" {
-  description = "Bucket containing antivirus databse files."
+  description = "Bucket containing antivirus database files."
   type        = string
 }
 
 variable "av_definition_s3_prefix" {
-  description = "Prefix for antivirus databse files."
+  description = "Prefix for antivirus database files."
   type        = string
   default     = "clamav_defs"
 }
