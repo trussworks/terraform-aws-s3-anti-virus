@@ -201,5 +201,5 @@ resource "aws_lambda_permission" "main_scan" {
   source_account = data.aws_caller_identity.current.account_id
   source_arn     = element(data.aws_s3_bucket.main_scan.*.arn, count.index)
 
-  statement_id = "${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
+  statement_id = replace("${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}", ".", "-")
 }
