@@ -96,18 +96,18 @@ module "s3_anti_virus" {
 | Name | Description |
 |------|-------------|
 | scan\_aws\_cloudwatch\_log\_group\_arn | ARN for the Anti-Virus Scanning Cloudwatch LogGroup. |
+| scan\_aws\_cloudwatch\_log\_group\_name | The Anti-Virus Scanning Cloudwatch LogGroup name. |
 | scan\_lambda\_function\_arn | ARN for the Anti-Virus Scanning lambda function |
 | scan\_lambda\_function\_iam\_role\_arn | Name of the Anti-Virus Scanning lambda role |
 | scan\_lambda\_function\_iam\_role\_name | Name of the Anti-Virus Scanning lambda role |
 | scan\_lambda\_function\_name | The Anti-Virus Scanning lambda function name |
 | scan\_lambda\_function\_version | Current version of the Anti-Virus Scanning lambda function |
-| scan\_laws\_cloudwatch\_log\_group\_name | The Anti-Virus Scanning Cloudwatch LogGroup name. |
 | update\_aws\_cloudwatch\_log\_group\_arn | ARN for the Anti-Virus Definitions Cloudwatch LogGroup. |
+| update\_aws\_cloudwatch\_log\_group\_name | The Anti-Virus Definitions Cloudwatch LogGroup name. |
 | update\_lambda\_function\_arn | ARN for the Anti-Virus Definitions lambda function |
 | update\_lambda\_function\_iam\_role\_arn | Name of the Anti-Virus Definitions lambda role |
 | update\_lambda\_function\_iam\_role\_name | Name of the Anti-Virus Definitions lambda role |
 | update\_lambda\_function\_name | The Anti-Virus Definitions lambda function name |
 | update\_lambda\_function\_version | Current version of the Anti-Virus Definitions lambda function |
-| update\_laws\_cloudwatch\_log\_group\_name | The Anti-Virus Definitions Cloudwatch LogGroup name. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

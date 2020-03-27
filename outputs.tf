@@ -6,7 +6,7 @@ output "scan_aws_cloudwatch_log_group_arn" {
   value       = aws_cloudwatch_log_group.main_scan.arn
 }
 
-output "scan_laws_cloudwatch_log_group_name" {
+output "scan_aws_cloudwatch_log_group_name" {
   description = "The Anti-Virus Scanning Cloudwatch LogGroup name."
   value       = "/aws/lambda/${var.name_scan}"
 }
@@ -44,7 +44,7 @@ output "update_aws_cloudwatch_log_group_arn" {
   value       = aws_cloudwatch_log_group.main_update.arn
 }
 
-output "update_laws_cloudwatch_log_group_name" {
+output "update_aws_cloudwatch_log_group_name" {
   description = "The Anti-Virus Definitions Cloudwatch LogGroup name."
   value       = "/aws/lambda/${var.name_update}"
 }
