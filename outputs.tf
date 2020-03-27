@@ -12,27 +12,27 @@ output "scan_aws_cloudwatch_log_group_name" {
 }
 
 output "scan_lambda_function_iam_role_arn" {
-  description = "Name of the Anti-Virus Scanning lambda role"
+  description = "Name of the Anti-Virus Scanning lambda role."
   value       = aws_iam_role.main_scan.arn
 }
 
 output "scan_lambda_function_iam_role_name" {
-  description = "Name of the Anti-Virus Scanning lambda role"
+  description = "Name of the Anti-Virus Scanning lambda role."
   value       = aws_iam_role.main_scan.name
 }
 
 output "scan_lambda_function_arn" {
-  description = "ARN for the Anti-Virus Scanning lambda function"
+  description = "ARN for the Anti-Virus Scanning lambda function."
   value       = aws_lambda_function.main_scan.arn
 }
 
 output "scan_lambda_function_name" {
-  description = "The Anti-Virus Scanning lambda function name"
+  description = "The Anti-Virus Scanning lambda function name."
   value       = var.name_scan
 }
 
 output "scan_lambda_function_version" {
-  description = "Current version of the Anti-Virus Scanning lambda function"
+  description = "Current version of the Anti-Virus Scanning lambda function."
   value       = aws_lambda_function.main_scan.version
 }
 
@@ -50,26 +50,26 @@ output "update_aws_cloudwatch_log_group_name" {
 }
 
 output "update_lambda_function_iam_role_arn" {
-  description = "Name of the Anti-Virus Definitions lambda role"
+  description = "ARN of the Anti-Virus Definitions lambda role."
   value       = aws_iam_role.main_update.arn
 }
 
 output "update_lambda_function_iam_role_name" {
-  description = "Name of the Anti-Virus Definitions lambda role"
+  description = "Name of the Anti-Virus Definitions lambda role."
   value       = aws_iam_role.main_update.name
 }
 
 output "update_lambda_function_arn" {
-  description = "ARN for the Anti-Virus Definitions lambda function"
+  description = "ARN for the Anti-Virus Definitions lambda function."
   value       = aws_lambda_function.main_update.arn
 }
 
 output "update_lambda_function_name" {
-  description = "The Anti-Virus Definitions lambda function name"
+  description = "The Anti-Virus Definitions lambda function name."
   value       = var.name_update
 }
 
 output "update_lambda_function_version" {
-  description = "Current version of the Anti-Virus Definitions lambda function"
+  description = "Current version of the Anti-Virus Definitions lambda function."
   value       = aws_lambda_function.main_update.version
 }
