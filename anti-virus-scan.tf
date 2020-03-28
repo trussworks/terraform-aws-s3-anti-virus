@@ -161,6 +161,8 @@ resource "aws_cloudwatch_log_group" "main_scan" {
 resource "aws_lambda_function" "main_scan" {
   depends_on = [aws_cloudwatch_log_group.main_scan]
 
+  description = "Scans s3 objects with clamav for viruses."
+
   s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
 
