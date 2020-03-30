@@ -70,6 +70,7 @@ data "aws_iam_policy_document" "main_update" {
 resource "aws_iam_role" "main_update" {
   name               = "lambda-${var.name_update}"
   assume_role_policy = data.aws_iam_policy_document.assume_role_update.json
+  tags               = var.tags
 }
 
 resource "aws_iam_role_policy" "main_update" {
@@ -87,6 +88,7 @@ resource "aws_cloudwatch_event_rule" "main_update" {
   name                = var.name_update
   description         = "scheduled trigger for ${var.name_update}"
   schedule_expression = "rate(${var.av_update_minutes} minutes)"
+  tags                = var.tags
 }
 
 resource "aws_cloudwatch_event_target" "main_update" {
@@ -103,9 +105,12 @@ resource "aws_cloudwatch_log_group" "main_update" {
   name              = "/aws/lambda/${var.name_update}"
   retention_in_days = var.cloudwatch_logs_retention_days
 
-  tags = {
-    Name = var.name_update
-  }
+  tags = merge(
+    {
+      "Name" = var.name_update
+    },
+    var.tags
+  )
 }
 
 #
@@ -114,6 +119,8 @@ resource "aws_cloudwatch_log_group" "main_update" {
 
 resource "aws_lambda_function" "main_update" {
   depends_on = [aws_cloudwatch_log_group.main_update]
+
+  description = "Updates clamav definitions stored in s3."
 
   s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
@@ -132,9 +139,12 @@ resource "aws_lambda_function" "main_update" {
     }
   }
 
-  tags = {
-    Name = var.name_update
-  }
+  tags = merge(
+    {
+      "Name" = var.name_update
+    },
+    var.tags
+  )
 }
 
 resource "aws_lambda_permission" "main_update" {
@@ -146,4 +156,3 @@ resource "aws_lambda_permission" "main_update" {
   principal  = "events.amazonaws.com"
   source_arn = aws_cloudwatch_event_rule.main_update.arn
 }
-

@@ -107,6 +107,7 @@ data "aws_iam_policy_document" "main_scan" {
 resource "aws_iam_role" "main_scan" {
   name               = "lambda-${var.name_scan}"
   assume_role_policy = data.aws_iam_policy_document.assume_role_scan.json
+  tags               = var.tags
 }
 
 resource "aws_iam_role_policy" "main_scan" {
@@ -145,9 +146,12 @@ resource "aws_cloudwatch_log_group" "main_scan" {
   name              = "/aws/lambda/${var.name_scan}"
   retention_in_days = var.cloudwatch_logs_retention_days
 
-  tags = {
-    Name = var.name_scan
-  }
+  tags = merge(
+    {
+      "Name" = var.name_scan
+    },
+    var.tags
+  )
 }
 
 #
@@ -156,6 +160,8 @@ resource "aws_cloudwatch_log_group" "main_scan" {
 
 resource "aws_lambda_function" "main_scan" {
   depends_on = [aws_cloudwatch_log_group.main_scan]
+
+  description = "Scans s3 objects with clamav for viruses."
 
   s3_bucket = var.lambda_s3_bucket
   s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
@@ -178,9 +184,12 @@ resource "aws_lambda_function" "main_scan" {
     }
   }
 
-  tags = {
-    Name = var.name_scan
-  }
+  tags = merge(
+    {
+      "Name" = var.name_scan
+    },
+    var.tags
+  )
 }
 
 resource "aws_lambda_permission" "main_scan" {
@@ -194,6 +203,5 @@ resource "aws_lambda_permission" "main_scan" {
   source_account = data.aws_caller_identity.current.account_id
   source_arn     = element(data.aws_s3_bucket.main_scan.*.arn, count.index)
 
-  statement_id = "${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}"
+  statement_id = replace("${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}", ".", "-")
 }
-

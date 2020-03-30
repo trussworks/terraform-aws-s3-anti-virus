@@ -36,16 +36,16 @@ Creates the following resources for anti-virus scanning:
 
 ## Terraform Versions
 
-Terraform 0.12. Pin module version to ~> 2.0.0. Submit pull-requests to master branch.
+Terraform 0.12. Pin module version to `~> 2.0.0`. Submit pull-requests to `master` branch.
 
-Terraform 0.11. Pin module version to ~> 1.1.1. Submit pull-requests to terraform011 branch.
+Terraform 0.11. Pin module version to `~> 1.1.1`. Submit pull-requests to `terraform011` branch.
 
 ## Usage
 
 ```hcl
 module "s3_anti_virus" {
   source = "trussworks/s3-anti-virus/aws"
-  version = "2.0.0"
+  version = "2.1.2"
 
   name_scan   = "s3-anti-virus-scan"
   name_update = "s3-anti-virus-updates"
@@ -59,8 +59,14 @@ module "s3_anti_virus" {
 
   av_definition_s3_bucket   = "av-update-bucket-name"
   av_definition_s3_prefix   = "anti-virus"
-  av_scan_start_sns_arn = "sns-topic-name"
-  av_status_sns_arn     = "sns-topic-name"
+  av_scan_start_sns_arn     = "sns-topic-name"
+  av_status_sns_arn         = "sns-topic-name"
+
+  tags = {
+    "Environment" = "my-environment"
+    "Purpose"     = "s3-anti-virus"
+    "Terraform"   = "true"
+  }
 }
 ```
 
@@ -75,8 +81,8 @@ module "s3_anti_virus" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| av\_definition\_s3\_bucket | Bucket containing antivirus databse files. | `string` | n/a | yes |
-| av\_definition\_s3\_prefix | Prefix for antivirus databse files. | `string` | `"clamav_defs"` | no |
+| av\_definition\_s3\_bucket | Bucket containing antivirus database files. | `string` | n/a | yes |
+| av\_definition\_s3\_prefix | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
 | av\_scan\_start\_sns\_arn | SNS topic ARN to publish notification about start of scan (optional). | `string` | `""` | no |
 | av\_status\_sns\_arn | SNS topic ARN to publish scan results (optional). | `string` | `""` | no |
@@ -88,10 +94,26 @@ module "s3_anti_virus" {
 | lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
 | lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
 | name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
-| name\_update | Name for resources associated with anti-virus updateing | `string` | `"s3-anti-virus-updates"` | no |
+| name\_update | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
+| tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| scan\_aws\_cloudwatch\_log\_group\_arn | ARN for the Anti-Virus Scanning Cloudwatch LogGroup. |
+| scan\_aws\_cloudwatch\_log\_group\_name | The Anti-Virus Scanning Cloudwatch LogGroup name. |
+| scan\_lambda\_function\_arn | ARN for the Anti-Virus Scanning lambda function. |
+| scan\_lambda\_function\_iam\_role\_arn | Name of the Anti-Virus Scanning lambda role. |
+| scan\_lambda\_function\_iam\_role\_name | Name of the Anti-Virus Scanning lambda role. |
+| scan\_lambda\_function\_name | The Anti-Virus Scanning lambda function name. |
+| scan\_lambda\_function\_version | Current version of the Anti-Virus Scanning lambda function. |
+| update\_aws\_cloudwatch\_log\_group\_arn | ARN for the Anti-Virus Definitions Cloudwatch LogGroup. |
+| update\_aws\_cloudwatch\_log\_group\_name | The Anti-Virus Definitions Cloudwatch LogGroup name. |
+| update\_lambda\_function\_arn | ARN for the Anti-Virus Definitions lambda function. |
+| update\_lambda\_function\_iam\_role\_arn | ARN of the Anti-Virus Definitions lambda role. |
+| update\_lambda\_function\_iam\_role\_name | Name of the Anti-Virus Definitions lambda role. |
+| update\_lambda\_function\_name | The Anti-Virus Definitions lambda function name. |
+| update\_lambda\_function\_version | Current version of the Anti-Virus Definitions lambda function. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
