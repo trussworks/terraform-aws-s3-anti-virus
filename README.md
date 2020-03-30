@@ -61,30 +61,6 @@ module "s3_anti_virus" {
   av_definition_s3_prefix   = "anti-virus"
   av_scan_start_sns_arn     = "sns-topic-name"
   av_status_sns_arn         = "sns-topic-name"
-}
-```
-
-You can add additional tags with `var.tags` to be added to AWS resources created for other organizational/billing/etc purposes:
-
-```hcl
-module "s3_anti_virus" {
-  source = "trussworks/s3-anti-virus/aws"
-  version = "2.1.2"
-
-  name_scan   = "s3-anti-virus-scan"
-  name_update = "s3-anti-virus-updates"
-
-  lambda_s3_bucket = "lambda-builds-us-west-2"
-  lambda_version   = "2.0.0"
-  lambda_package   = "anti-virus"
-
-  av_update_minutes = "180"
-  av_scan_buckets   = ["bucket-name"]
-
-  av_definition_s3_bucket   = "av-update-bucket-name"
-  av_definition_s3_prefix   = "anti-virus"
-  av_scan_start_sns_arn     = "sns-topic-name"
-  av_status_sns_arn         = "sns-topic-name"
 
   tags = {
     "Environment" = "my-environment"
