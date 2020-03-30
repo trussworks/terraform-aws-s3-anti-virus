@@ -87,9 +87,9 @@ module "s3_anti_virus" {
   av_status_sns_arn         = "sns-topic-name"
 
   tags = {
-    Environment = "my-environment"
-    Purpose     = "s3-anti-virus"
-    Terraform   = "true"
+    "Environment" = "my-environment"
+    "Purpose"     = "s3-anti-virus"
+    "Terraform"   = "true"
   }
 }
 ```
