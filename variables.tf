@@ -32,6 +32,12 @@ variable "lambda_package" {
   default     = "anti-virus"
 }
 
+variable "memory_size" {
+  description = "Lambda memory allocation, in MB"
+  type        = string
+  default     = 1536
+}
+
 variable "av_update_minutes" {
   default     = 180
   description = "How often to download updated Anti-Virus databases."
@@ -47,6 +53,12 @@ variable "tags" {
   description = "A map of tags to add to all resources."
   type        = map(string)
   default     = {}
+}
+
+variable "timeout_seconds" {
+  description = "Lambda timeout, in seconds"
+  type        = string
+  default     = 300
 }
 
 #
