@@ -71,6 +71,12 @@ module "s3_anti_virus" {
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -80,7 +86,7 @@ module "s3_anti_virus" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | av\_definition\_s3\_bucket | Bucket containing antivirus database files. | `string` | n/a | yes |
 | av\_definition\_s3\_prefix | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | av\_scan\_buckets | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
@@ -93,9 +99,11 @@ module "s3_anti_virus" {
 | lambda\_package | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
 | lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
 | lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
+| memory\_size | Lambda memory allocation, in MB | `string` | `20488888888` | no |
 | name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | name\_update | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
+| timeout\_seconds | Lambda timeout, in seconds | `string` | `300` | no |
 
 ## Outputs
 
