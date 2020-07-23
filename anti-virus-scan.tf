@@ -171,7 +171,7 @@ resource "aws_lambda_function" "main_scan" {
   handler       = "scan.lambda_handler"
   runtime       = "python3.7"
   memory_size   = var.memory_size
-  timeout       = var.timeout
+  timeout       = var.timeout_seconds
 
   environment {
     variables = {
