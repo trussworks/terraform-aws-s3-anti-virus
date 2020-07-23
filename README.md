@@ -99,7 +99,7 @@ module "s3_anti_virus" {
 | lambda\_package | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
 | lambda\_s3\_bucket | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
 | lambda\_version | The version the Lambda function to deploy. | `string` | n/a | yes |
-| memory\_size | Lambda memory allocation, in MB | `string` | `20488888888` | no |
+| memory\_size | Lambda memory allocation, in MB | `string` | `2048` | no |
 | name\_scan | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | name\_update | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |

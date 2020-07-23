@@ -35,7 +35,7 @@ variable "lambda_package" {
 variable "memory_size" {
   description = "Lambda memory allocation, in MB"
   type        = string
-  default     = 20488888888
+  default     = 2048
 }
 
 variable "av_update_minutes" {
