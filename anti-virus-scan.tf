@@ -181,6 +181,7 @@ resource "aws_lambda_function" "main_scan" {
       AV_STATUS_SNS_ARN              = var.av_status_sns_arn
       AV_STATUS_SNS_PUBLISH_CLEAN    = var.av_status_sns_publish_clean
       AV_STATUS_SNS_PUBLISH_INFECTED = var.av_status_sns_publish_infected
+      AV_DELETE_INFECTED_FILES       = var.av_delete_infected_files
     }
   }
 
