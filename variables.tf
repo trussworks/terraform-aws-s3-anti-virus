@@ -98,3 +98,9 @@ variable "av_status_sns_publish_infected" {
   type        = string
   default     = "True"
 }
+
+variable "av_delete_infected_files" {
+  description = "Set it True in order to delete infected values."
+  type        = string
+  default     = "False"
+}
