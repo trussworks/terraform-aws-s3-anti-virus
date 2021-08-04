@@ -49,6 +49,11 @@ variable "av_scan_buckets" {
   type        = list(string)
 }
 
+variable "permissions_boundary" {
+  description = "ARN of the boundary policy to attach to roles."
+  default     = null
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources."
   type        = map(string)
