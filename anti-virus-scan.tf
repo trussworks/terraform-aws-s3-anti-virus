@@ -91,16 +91,18 @@ data "aws_iam_policy_document" "main_scan" {
     resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
 
-  statement {
-    sid = "snsPublish"
+  dynamic "statement" {
+    for_each = length(compact([var.av_scan_start_sns_arn, var.av_status_sns_arn])) != 0 ? toset([0]) : toset([])
 
-    effect = "Allow"
+    content {
+      sid = "snsPublish"
 
-    actions = [
-      "sns:Publish",
-    ]
+      actions = [
+        "sns:Publish",
+      ]
 
-    resources = compact([var.av_scan_start_sns_arn, var.av_status_sns_arn])
+      resources = compact([var.av_scan_start_sns_arn, var.av_status_sns_arn])
+    }
   }
 }
 
