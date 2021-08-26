@@ -59,8 +59,6 @@ module "s3_anti_virus" {
 
   av_definition_s3_bucket   = "av-update-bucket-name"
   av_definition_s3_prefix   = "anti-virus"
-  av_scan_start_sns_arn     = "sns-topic-name"
-  av_status_sns_arn         = "sns-topic-name"
 
   tags = {
     "Environment" = "my-environment"
