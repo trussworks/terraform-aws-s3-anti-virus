@@ -50,7 +50,8 @@ variable "av_scan_buckets" {
 }
 
 variable "permissions_boundary" {
-  description = "ARN of the boundary policy to attach to roles."
+  description = "ARN of the boundary policy to attach to IAM roles."
+  type        = string
   default     = null
 }
 
