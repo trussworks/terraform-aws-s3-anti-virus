@@ -68,9 +68,10 @@ data "aws_iam_policy_document" "main_update" {
 }
 
 resource "aws_iam_role" "main_update" {
-  name               = "lambda-${var.name_update}"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_update.json
-  tags               = var.tags
+  name                 = "lambda-${var.name_update}"
+  assume_role_policy   = data.aws_iam_policy_document.assume_role_update.json
+  permissions_boundary = var.permissions_boundary
+  tags                 = var.tags
 }
 
 resource "aws_iam_role_policy" "main_update" {
