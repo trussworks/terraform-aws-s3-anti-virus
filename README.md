@@ -36,7 +36,7 @@ Creates the following resources for anti-virus scanning:
 
 ## Terraform Versions
 
-Terraform 0.13 and newer. Pin module version to `~> 3.X`. Submit pull-requests to `master` branch.
+Terraform 0.13 and newer. Pin module version to `~> 3.X`. Submit pull-requests to `main` branch.
 
 Terraform 0.12. Pin module version to `~> 2.X`. Submit pull-requests to `terraform012` branch.
 
@@ -118,6 +118,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_av_definition_s3_bucket"></a> [av\_definition\_s3\_bucket](#input\_av\_definition\_s3\_bucket) | Bucket containing antivirus database files. | `string` | n/a | yes |
 | <a name="input_av_definition_s3_prefix"></a> [av\_definition\_s3\_prefix](#input\_av\_definition\_s3\_prefix) | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
+| <a name="input_av_delete_infected_files"></a> [av\_delete\_infected\_files](#input\_av\_delete\_infected\_files) | Set it True in order to delete infected values. | `string` | `"False"` | no |
 | <a name="input_av_scan_buckets"></a> [av\_scan\_buckets](#input\_av\_scan\_buckets) | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
 | <a name="input_av_scan_start_sns_arn"></a> [av\_scan\_start\_sns\_arn](#input\_av\_scan\_start\_sns\_arn) | SNS topic ARN to publish notification about start of scan (optional). | `string` | `""` | no |
 | <a name="input_av_status_sns_arn"></a> [av\_status\_sns\_arn](#input\_av\_status\_sns\_arn) | SNS topic ARN to publish scan results (optional). | `string` | `""` | no |
