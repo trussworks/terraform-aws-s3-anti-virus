@@ -21,10 +21,20 @@ variable "lambda_s3_bucket" {
   type        = string
 }
 
-variable "lambda_package_key" {
-  description = "The object key for the lambda distribution. Defaults to lambda.zip since this is build by default upstream."
+variable "lambda_version" {
+  description = "The version the Lambda function to deploy."
+}
+
+variable "lambda_package" {
+  description = "The name of the lambda package. Used for a directory tree and zip file."
   type        = string
-  default     = "lambda.zip"
+  default     = "anti-virus"
+}
+
+variable "lambda_package_key" {
+  description = "The object key for the lambda distribution. If given, the value is used as the key in lieu of the value constructed using `lambda_package` and `lambda_version`."
+  type        = string
+  default     = null
 }
 
 variable "memory_size" {
