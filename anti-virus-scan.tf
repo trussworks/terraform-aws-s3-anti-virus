@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_scan" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
+    resources = ["arn:${local.aws_partition}:logs:${local.aws_region_name}:${local.aws_account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
   }
 
   statement {
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:GetObjectTagging",
     ]
 
-    resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
+    resources = ["arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
 
   statement {
@@ -74,8 +74,8 @@ data "aws_iam_policy_document" "main_scan" {
     ]
 
     resources = [
-      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}",
-      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/*",
+      "arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}",
+      "arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}/*",
     ]
   }
 
@@ -167,25 +167,34 @@ resource "aws_lambda_function" "main_scan" {
   description = "Scans s3 objects with clamav for viruses."
 
   s3_bucket = var.lambda_s3_bucket
-  s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
+  s3_key    = local.lambda_s3_object_key
 
   function_name = var.name_scan
   role          = aws_iam_role.main_scan.arn
   handler       = "scan.lambda_handler"
-  runtime       = "python3.7"
+  runtime       = var.lambda_runtime
   memory_size   = var.memory_size
   timeout       = var.timeout_seconds
 
   environment {
-    variables = {
-      AV_DEFINITION_S3_BUCKET        = var.av_definition_s3_bucket
-      AV_DEFINITION_S3_PREFIX        = var.av_definition_s3_prefix
-      AV_SCAN_START_SNS_ARN          = var.av_scan_start_sns_arn
-      AV_STATUS_SNS_ARN              = var.av_status_sns_arn
-      AV_STATUS_SNS_PUBLISH_CLEAN    = var.av_status_sns_publish_clean
-      AV_STATUS_SNS_PUBLISH_INFECTED = var.av_status_sns_publish_infected
-      AV_DELETE_INFECTED_FILES       = var.av_delete_infected_files
-    }
+    variables = tomap({
+      AV_DEFINITION_S3_BUCKET          = var.av_definition_s3_bucket,
+      AV_DEFINITION_S3_PREFIX          = var.av_definition_s3_prefix,
+      AV_DELETE_INFECTED_FILES         = var.av_delete_infected_files,
+      AV_PROCESS_ORIGINAL_VERSION_ONLY = var.av_process_original_version_only,
+      AV_SCAN_START_METADATA           = var.av_scan_start_metadata,
+      AV_SCAN_START_SNS_ARN            = var.av_scan_start_sns_arn,
+      AV_SIGNATURE_METADATA            = var.av_signature_metadata,
+      AV_STATUS_CLEAN                  = var.av_status_clean,
+      AV_STATUS_INFECTED               = var.av_status_infected,
+      AV_STATUS_METADATA               = var.av_status_metadata,
+      AV_STATUS_SNS_ARN                = var.av_status_sns_arn,
+      AV_STATUS_SNS_PUBLISH_CLEAN      = var.av_status_sns_publish_clean,
+      AV_STATUS_SNS_PUBLISH_INFECTED   = var.av_status_sns_publish_infected,
+      AV_TIMESTAMP_METADATA            = var.av_timestamp_metadata,
+      S3_ENDPOINT                      = var.s3_endpoint,
+      SNS_ENDPOINT                     = var.sns_endpoint,
+    })
   }
 
   tags = merge(
@@ -204,7 +213,7 @@ resource "aws_lambda_permission" "main_scan" {
 
   principal = "s3.amazonaws.com"
 
-  source_account = data.aws_caller_identity.current.account_id
+  source_account = local.aws_account_id
   source_arn     = element(data.aws_s3_bucket.main_scan.*.arn, count.index)
 
   statement_id = replace("${var.name_scan}-${element(data.aws_s3_bucket.main_scan.*.id, count.index)}", ".", "-")

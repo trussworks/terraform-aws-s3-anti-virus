@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "main_update" {
       "logs:PutLogEvents",
     ]
 
-    resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_update}:*"]
+    resources = ["arn:${local.aws_partition}:logs:${local.aws_region_name}:${local.aws_account_id}:log-group:/aws/lambda/${var.name_update}:*"]
   }
 
   statement {
@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "main_update" {
       "s3:PutObjectVersionTagging",
     ]
 
-    resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
+    resources = ["arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
   }
 
   statement {
@@ -61,8 +61,8 @@ data "aws_iam_policy_document" "main_update" {
     ]
 
     resources = [
-      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}",
-      "arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/*",
+      "arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}",
+      "arn:${local.aws_partition}:s3:::${var.av_definition_s3_bucket}/*",
     ]
   }
 }
@@ -88,7 +88,7 @@ resource "aws_iam_role_policy" "main_update" {
 resource "aws_cloudwatch_event_rule" "main_update" {
   name                = var.name_update
   description         = "scheduled trigger for ${var.name_update}"
-  schedule_expression = "rate(${var.av_update_minutes} minutes)"
+  schedule_expression = local.cw_schedule_expression
   tags                = var.tags
 }
 
@@ -124,22 +124,24 @@ resource "aws_lambda_function" "main_update" {
   description = "Updates clamav definitions stored in s3."
 
   s3_bucket = var.lambda_s3_bucket
-  s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
+  s3_key    = local.lambda_s3_object_key
 
   function_name = var.name_update
   role          = aws_iam_role.main_update.arn
   handler       = "update.lambda_handler"
-  runtime       = "python3.7"
+  runtime       = var.lambda_runtime
   memory_size   = var.memory_size
   timeout       = var.timeout_seconds
 
   environment {
-    variables = {
-      AV_DEFINITION_S3_BUCKET = var.av_definition_s3_bucket
-      AV_DEFINITION_S3_PREFIX = var.av_definition_s3_prefix
-    }
+    variables = tomap({
+      AV_DEFINITION_S3_BUCKET = var.av_definition_s3_bucket,
+      AV_DEFINITION_S3_PREFIX = var.av_definition_s3_prefix,
+      AV_DEFINITION_PATH      = var.av_definition_path,
+      CLAMAVLIB_PATH          = var.clamavlib_path,
+      S3_ENDPOINT             = var.s3_endpoint,
+    })
   }
-
   tags = merge(
     {
       "Name" = var.name_update
