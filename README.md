@@ -164,10 +164,10 @@ module "s3_anti_virus" {
 
 ## TODO
 
-[ ] Add directory with examples
-[ ] Add lambda function build to the module using local-exec.
-[ ] ^ Don't forget to check the installed docker on the local machine
-[ ] Fix permanent triggers and false positives with source_account `(known after apply) # forces replacement
+* [ ] Add directory with examples
+* [ ] Add lambda function build to the module using local-exec.
+* [ ] ^ Don't forget to check the installed docker on the local machine
+* [ ] Fix permanent triggers and false positives with source_account `(known after apply) # forces replacement
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
