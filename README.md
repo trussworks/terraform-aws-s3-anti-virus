@@ -21,14 +21,16 @@ or use the [s3_bucket_object](https://registry.terraform.io/providers/hashicorp/
 
 ```hcl
 ...
+
 resource "aws_s3_bucket_object" "function_zip" {
   ## https://github.com/upsidetravel/bucket-antivirus-function
+  bucket = module.s3_bucket_dependencies.bucket_id
   key    = "lambda.zip"
-  bucket = module.s3_dependencies.bucket_id
   source = "./bucket-antivirus-function/build/lambda.zip"
   etag   = filemd5("./bucket-antivirus-function/build/lambda.zip")
   ...
 }
+
 ...
 ```
 
@@ -115,8 +117,8 @@ resource "null_resource" "build_function" {
 resource "aws_s3_bucket_object" "function_zip" {
   ## https://github.com/upsidetravel/bucket-antivirus-function
   ## Remote
+  bucket = module.s3_bucket_dependencies.bucket_id
   key    = local.s3_object_clamav_func
-  bucket = module.s3_dependencies.bucket_id
 
   ## Local
   source = "./${local.dir_build}/lambda.zip"
@@ -138,11 +140,11 @@ module "s3_anti_virus" {
   name_update = "${module.naming.id}-updates"
 
   ## https://github.com/upsidetravel/bucket-antivirus-function
-  lambda_s3_bucket     = module.s3_dependencies.bucket_id
+  lambda_s3_bucket     = module.s3_bucket_dependencies.bucket_id
   lambda_s3_object_key = aws_s3_bucket_object.function_zip.key
 
   av_update_schedule_expression = "rate(6 hours)"
-  av_definition_s3_bucket       = module.s3_dependencies.bucket_id
+  av_definition_s3_bucket       = module.s3_bucket_dependencies.bucket_id
   av_definition_s3_prefix       = "ClamAV_Virus_Database"
 
   av_scan_buckets = [
@@ -151,7 +153,7 @@ module "s3_anti_virus" {
   ]
 
   depends_on = [
-    module.s3_dependencies,
+    module.s3_bucket_dependencies,
     aws_s3_bucket_object.function_zip
   ]
 
@@ -219,7 +221,7 @@ No modules.
 | <a name="input_av_definition_s3_bucket"></a> [av\_definition\_s3\_bucket](#input\_av\_definition\_s3\_bucket) | Bucket containing antivirus database files. | `string` | n/a | yes |
 | <a name="input_av_definition_s3_prefix"></a> [av\_definition\_s3\_prefix](#input\_av\_definition\_s3\_prefix) | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | <a name="input_av_delete_infected_files"></a> [av\_delete\_infected\_files](#input\_av\_delete\_infected\_files) | Set it True in order to delete infected values. | `bool` | `false` | no |
-| <a name="input_av_process_original_version_only"></a> [av\_process\_original\_version\_only](#input\_av\_process\_original\_version\_only) | Controls that only original version of an S3 key is processed (if bucket versioning is enabled) | `bool` | `true` | no |
+| <a name="input_av_process_original_version_only"></a> [av\_process\_original\_version\_only](#input\_av\_process\_original\_version\_only) | Controls that only original version of an S3 key is processed (if bucket versioning is enabled) | `bool` | `false` | no |
 | <a name="input_av_scan_buckets"></a> [av\_scan\_buckets](#input\_av\_scan\_buckets) | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
 | <a name="input_av_scan_start_metadata"></a> [av\_scan\_start\_metadata](#input\_av\_scan\_start\_metadata) | The tag/metadata indicating the start of the scan | `string` | `"av-scan-start"` | no |
 | <a name="input_av_scan_start_sns_arn"></a> [av\_scan\_start\_sns\_arn](#input\_av\_scan\_start\_sns\_arn) | SNS topic ARN to publish notification about start of scan (optional). | `string` | `null` | no |

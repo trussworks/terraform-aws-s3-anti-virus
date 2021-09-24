@@ -134,7 +134,7 @@ variable "av_delete_infected_files" {
 variable "av_process_original_version_only" {
   description = "Controls that only original version of an S3 key is processed (if bucket versioning is enabled)"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "av_scan_start_metadata" {
