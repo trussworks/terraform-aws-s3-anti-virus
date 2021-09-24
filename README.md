@@ -4,7 +4,7 @@
 Creates an AWS Lambda function to do anti-virus scanning of objects in AWS S3
 using [bucket-antivirus-function](https://github.com/upsidetravel/bucket-antivirus-function)
 
-While waiting for updates on that repo you will need to use a special resitory:
+While waiting for updates on that repo you will need to use a special repository:
 
 ```sh
 git clone git@github.com:upsidetravel/bucket-antivirus-function.git
@@ -167,7 +167,7 @@ module "s3_anti_virus" {
 * [ ] Add directory with examples
 * [ ] Add lambda function build to the module using local-exec.
 * [ ] ^ Don't forget to check the installed docker on the local machine
-* [ ] Fix permanent triggers and false positives with source_account `(known after apply) # forces replacement
+* [ ] Fix permanent triggers and false positives with source_account `(known after apply) # forces replacement`
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
