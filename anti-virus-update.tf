@@ -124,7 +124,7 @@ resource "aws_lambda_function" "main_update" {
   description = "Updates clamav definitions stored in s3."
 
   s3_bucket = var.lambda_s3_bucket
-  s3_key    = "${var.lambda_package}/${var.lambda_version}/${var.lambda_package}.zip"
+  s3_key    = local.lambda_package_key
 
   function_name = var.name_update
   role          = aws_iam_role.main_update.arn
