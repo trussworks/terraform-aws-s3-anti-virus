@@ -126,8 +126,9 @@ No modules.
 | <a name="input_av_update_minutes"></a> [av\_update\_minutes](#input\_av\_update\_minutes) | How often to download updated Anti-Virus databases. | `string` | `180` | no |
 | <a name="input_cloudwatch_logs_retention_days"></a> [cloudwatch\_logs\_retention\_days](#input\_cloudwatch\_logs\_retention\_days) | Number of days to keep logs in AWS CloudWatch. | `string` | `90` | no |
 | <a name="input_lambda_package"></a> [lambda\_package](#input\_lambda\_package) | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
+| <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | The object key for the lambda distribution. If given, the value is used as the key in lieu of the value constructed using `lambda_package` and `lambda_version`. | `string` | `null` | no |
 | <a name="input_lambda_s3_bucket"></a> [lambda\_s3\_bucket](#input\_lambda\_s3\_bucket) | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
-| <a name="input_lambda_version"></a> [lambda\_version](#input\_lambda\_version) | The version the Lambda function to deploy. | `string` | n/a | yes |
+| <a name="input_lambda_version"></a> [lambda\_version](#input\_lambda\_version) | The version the Lambda function to deploy. | `any` | n/a | yes |
 | <a name="input_memory_size"></a> [memory\_size](#input\_memory\_size) | Lambda memory allocation, in MB | `string` | `2048` | no |
 | <a name="input_name_scan"></a> [name\_scan](#input\_name\_scan) | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | <a name="input_name_update"></a> [name\_update](#input\_name\_update) | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
