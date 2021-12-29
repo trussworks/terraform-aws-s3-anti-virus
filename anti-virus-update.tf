@@ -105,6 +105,7 @@ resource "aws_cloudwatch_log_group" "main_update" {
   # This name must match the lambda function name and should not be changed
   name              = "/aws/lambda/${var.name_update}"
   retention_in_days = var.cloudwatch_logs_retention_days
+  kms_key_id        = var.cloudwatch_kms_arn
 
   tags = merge(
     {

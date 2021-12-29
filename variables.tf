@@ -115,3 +115,9 @@ variable "av_delete_infected_files" {
   type        = string
   default     = "False"
 }
+
+variable "cloudwatch_kms_arn" {
+  description = "The arn of the kms key used for encrypting the cloudwatch log groups created by this module."
+  type        = string
+  default     = ""
+}

@@ -124,6 +124,7 @@ No modules.
 | <a name="input_av_status_sns_publish_clean"></a> [av\_status\_sns\_publish\_clean](#input\_av\_status\_sns\_publish\_clean) | Publish AV\_STATUS\_CLEAN results to AV\_STATUS\_SNS\_ARN. | `string` | `"True"` | no |
 | <a name="input_av_status_sns_publish_infected"></a> [av\_status\_sns\_publish\_infected](#input\_av\_status\_sns\_publish\_infected) | Publish AV\_STATUS\_INFECTED results to AV\_STATUS\_SNS\_ARN. | `string` | `"True"` | no |
 | <a name="input_av_update_minutes"></a> [av\_update\_minutes](#input\_av\_update\_minutes) | How often to download updated Anti-Virus databases. | `string` | `180` | no |
+| <a name="input_cloudwatch_kms_arn"></a> [cloudwatch\_kms\_arn](#input\_cloudwatch\_kms\_arn) | The arn of the kms key used for encrypting the cloudwatch log groups created by this module. | `string` | `""` | no |
 | <a name="input_cloudwatch_logs_retention_days"></a> [cloudwatch\_logs\_retention\_days](#input\_cloudwatch\_logs\_retention\_days) | Number of days to keep logs in AWS CloudWatch. | `string` | `90` | no |
 | <a name="input_lambda_package"></a> [lambda\_package](#input\_lambda\_package) | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
 | <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | The object key for the lambda distribution. If given, the value is used as the key in lieu of the value constructed using `lambda_package` and `lambda_version`. | `string` | `null` | no |
