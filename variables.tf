@@ -113,7 +113,7 @@ variable "av_status_sns_publish_infected" {
 variable "av_delete_infected_files" {
   description = "Set it True in order to delete infected values."
   type        = string
-  default     = "Talse"
+  default     = "False"
 }
 
 variable "cloudwatch_kms_arn" {
