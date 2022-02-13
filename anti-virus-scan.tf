@@ -30,6 +30,7 @@ data "aws_iam_policy_document" "main_scan" {
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
+      "s3:kuku"
     ]
 
     resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
@@ -61,6 +62,7 @@ data "aws_iam_policy_document" "main_scan" {
     actions = [
       "s3:GetObject",
       "s3:GetObjectTagging",
+      "s3:kuku"
     ]
 
     resources = ["arn:${data.aws_partition.current.partition}:s3:::${var.av_definition_s3_bucket}/${var.av_definition_s3_prefix}/*"]
