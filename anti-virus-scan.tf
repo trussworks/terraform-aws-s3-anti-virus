@@ -41,12 +41,11 @@ data "aws_iam_policy_document" "main_scan" {
     effect = "Allow"
 
     actions = concat([
-      var.av_delete_infected_files ? ["s3:DeleteObject","s3:GetObject"] : ["s3:GetObject"],
       "s3:GetObjectTagging",
       "s3:GetObjectVersion",
       "s3:PutObjectTagging",
       "s3:PutObjectVersionTagging"
-    ])
+    ],var.av_delete_infected_files ? ["s3:DeleteObject","s3:GetObject"] : ["s3:GetObject"])
 
     resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
