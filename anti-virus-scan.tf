@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "main_scan" {
       "s3:GetObjectVersion",
       "s3:PutObjectTagging",
       "s3:PutObjectVersionTagging"
-    ],var.av_delete_infected_files ? ["s3:DeleteObject"] : [null])
+    ],var.av_delete_infected_files ? ["s3:DeleteObject"] : [""])
 
     resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
