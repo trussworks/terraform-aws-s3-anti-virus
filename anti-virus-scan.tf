@@ -42,7 +42,6 @@ data "aws_iam_policy_document" "main_scan" {
 
     actions = [
       var.av_delete_infected_files ? "s3:DeleteObject,s3:GetObject" : "s3:GetObject",
-      "s3:GetObject",
       "s3:GetObjectTagging",
       "s3:GetObjectVersion",
       "s3:PutObjectTagging",
