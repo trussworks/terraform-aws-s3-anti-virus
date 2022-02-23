@@ -118,7 +118,7 @@ No modules.
 | <a name="input_av_definition_s3_bucket"></a> [av\_definition\_s3\_bucket](#input\_av\_definition\_s3\_bucket) | Bucket containing antivirus database files. | `string` | n/a | yes |
 | <a name="input_av_definition_s3_prefix"></a> [av\_definition\_s3\_prefix](#input\_av\_definition\_s3\_prefix) | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | <a name="input_av_delete_infected_files"></a> [av\_delete\_infected\_files](#input\_av\_delete\_infected\_files) | Set it True in order to delete infected values. | `string` | `"False"` | no |
-| <a name="input_av_scan_buckets"></a> [av\_scan\_buckets](#input\_av\_scan\_buckets) | A list of S3 bucket names to scan for viruses. | `list(string)` | n/a | yes |
+| <a name="input_av_scan_buckets"></a> [av\_scan\_buckets](#input\_av\_scan\_buckets) | A list of S3 bucket configurations to scan for viruses. | <pre>list(object({<br>    bucket = string<br>    prefix = string<br>    suffix = string<br>  }))</pre> | `[]` | no |
 | <a name="input_av_scan_start_sns_arn"></a> [av\_scan\_start\_sns\_arn](#input\_av\_scan\_start\_sns\_arn) | SNS topic ARN to publish notification about start of scan (optional). | `string` | `""` | no |
 | <a name="input_av_status_sns_arn"></a> [av\_status\_sns\_arn](#input\_av\_status\_sns\_arn) | SNS topic ARN to publish scan results (optional). | `string` | `""` | no |
 | <a name="input_av_status_sns_publish_clean"></a> [av\_status\_sns\_publish\_clean](#input\_av\_status\_sns\_publish\_clean) | Publish AV\_STATUS\_CLEAN results to AV\_STATUS\_SNS\_ARN. | `string` | `"True"` | no |
