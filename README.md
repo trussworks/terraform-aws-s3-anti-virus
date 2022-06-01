@@ -136,6 +136,7 @@ No modules.
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | ARN of the boundary policy to attach to IAM roles. | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_timeout_seconds"></a> [timeout\_seconds](#input\_timeout\_seconds) | Lambda timeout, in seconds | `string` | `300` | no |
+| <a name="ephemeral_storage_size"></a> [ephemeral\_storage\_size](#ephemeral\_storage\_size) | Lambda ephemeral storage size, in MB | `number` | 512 | no |
 
 ## Outputs
 

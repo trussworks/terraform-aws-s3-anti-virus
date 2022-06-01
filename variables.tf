@@ -37,6 +37,12 @@ variable "lambda_package_key" {
   default     = null
 }
 
+variable "ephemeral_storage_size" {
+  description = "The size of the Lambda function Ephemeral storage(/tmp) represented in MB. The minimum supported ephemeral_storage value defaults to 512MB and the maximum supported value is 10240MB."
+  type        = number
+  default     = 512
+}
+
 variable "memory_size" {
   description = "Lambda memory allocation, in MB"
   type        = string
