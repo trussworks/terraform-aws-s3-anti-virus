@@ -72,9 +72,6 @@ variable "timeout_seconds" {
   default     = 300
 }
 
-#
-# The variables below correspond to https://github.com/upsidetravel/bucket-antivirus-function/tree/master#configuration
-#
 variable "av_definition_s3_bucket" {
   description = "Bucket containing antivirus database files."
   type        = string
