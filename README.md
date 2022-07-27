@@ -2,21 +2,21 @@
 # terraform-aws-s3-anti-virus
 
 Creates an AWS Lambda function to do anti-virus scanning of objects in AWS S3
-using [bucket-antivirus-function](https://github.com/upsidetravel/bucket-antivirus-function)
+using [bucket-antivirus-function](https://github.com/trussworks/bucket-antivirus-function)
 
-While waiting for updates on that repo you will need to use a special fork and branch:
+The source repository hasn't been updated in a long time, so we've forked the repo to our account and made changes.
 
 ```sh
-git clone git@github.com:upsidetravel/bucket-antivirus-function.git
+git clone git@github.com:trussworks/bucket-antivirus-function.git
 cd bucket-antivirus-function
-git checkout v2.0.0
+git checkout v2.2.0
 ```
 
 With that repo checked out you must run the `make` command and then copy the resulting zip file
 to AWS S3 with:
 
 ```sh
-VERSION=2.0.0
+VERSION=2.2.0
 aws s3 cp bucket-antivirus-function/build/lambda.zip "s3://lambda-builds-us-west-2/anti-virus/${VERSION}/anti-virus.zip"
 ```
 
