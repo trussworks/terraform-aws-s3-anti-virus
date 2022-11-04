@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "main_scan" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents",
+      "logs:PutLogEvents"
     ]
 
     resources = ["arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.name_scan}:*"]
@@ -40,13 +40,13 @@ data "aws_iam_policy_document" "main_scan" {
 
     effect = "Allow"
 
-    actions = [
+    actions = concat([
       "s3:GetObject",
       "s3:GetObjectTagging",
       "s3:GetObjectVersion",
       "s3:PutObjectTagging",
-      "s3:PutObjectVersionTagging",
-    ]
+      "s3:PutObjectVersionTagging"
+    ],var.av_delete_infected_files ? ["s3:DeleteObject"] : [])
 
     resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
   }
