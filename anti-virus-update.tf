@@ -58,7 +58,9 @@ data "aws_iam_policy_document" "main_update" {
 
     actions = [
       "s3:ListBucket",
-      "s3:PutObject"
+      "s3:PutObject",
+      "s3:PutObjectTagging",
+      "s3:PutObjectVersionTagging",
     ]
 
     resources = [
