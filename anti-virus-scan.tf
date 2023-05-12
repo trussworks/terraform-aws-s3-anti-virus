@@ -79,18 +79,21 @@ data "aws_iam_policy_document" "main_scan" {
     ]
   }
 
-  statement {
-    sid = "kmsDecrypt"
+  dynamic "statement" {
+    for_each = var.kms_key_sns_arn != "" ? [1] : []
+    content {
+      sid = "kmsGenerateDataKey"
 
-    effect = "Allow"
+      effect = "Allow"
 
-    actions = [
-      "kms:GenerateDataKey",
-    ]
+      actions = [
+        "kms:GenerateDataKey",
+      ]
 
-    resources = [
-      var.kms_key_sns_arn
-    ]
+      resources = [
+        var.kms_key_sns_arn
+      ]
+    }
   }
 
   dynamic "statement" {
