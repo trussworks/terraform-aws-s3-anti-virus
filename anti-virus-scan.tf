@@ -85,10 +85,12 @@ data "aws_iam_policy_document" "main_scan" {
     effect = "Allow"
 
     actions = [
-      "kms:Decrypt",
+      "kms:GenerateDataKey",
     ]
 
-    resources = formatlist("%s/*", data.aws_s3_bucket.main_scan.*.arn)
+    resources = [
+      var.kms_key_sns_arn
+    ]
   }
 
   dynamic "statement" {
