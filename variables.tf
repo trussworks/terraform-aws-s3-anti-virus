@@ -43,6 +43,12 @@ variable "memory_size" {
   default     = 2048
 }
 
+variable "kms_key_sns_arn" {
+  description = "ARN of the KMS Key to use for SNS Encryption"
+  type        = string
+  default     = ""
+}
+
 variable "av_update_minutes" {
   default     = 180
   description = "How often to download updated Anti-Virus databases."

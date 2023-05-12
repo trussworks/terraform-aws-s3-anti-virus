@@ -67,7 +67,7 @@ module "s3_anti_virus" {
 }
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -126,6 +126,7 @@ No modules.
 | <a name="input_av_update_minutes"></a> [av\_update\_minutes](#input\_av\_update\_minutes) | How often to download updated Anti-Virus databases. | `string` | `180` | no |
 | <a name="input_cloudwatch_kms_arn"></a> [cloudwatch\_kms\_arn](#input\_cloudwatch\_kms\_arn) | The arn of the kms key used for encrypting the cloudwatch log groups created by this module. | `string` | `""` | no |
 | <a name="input_cloudwatch_logs_retention_days"></a> [cloudwatch\_logs\_retention\_days](#input\_cloudwatch\_logs\_retention\_days) | Number of days to keep logs in AWS CloudWatch. | `string` | `90` | no |
+| <a name="input_kms_key_sns_arn"></a> [kms\_key\_sns\_arn](#input\_kms\_key\_sns\_arn) | ARN of the KMS Key to use for SNS Encryption | `string` | `""` | no |
 | <a name="input_lambda_package"></a> [lambda\_package](#input\_lambda\_package) | The name of the lambda package. Used for a directory tree and zip file. | `string` | `"anti-virus"` | no |
 | <a name="input_lambda_package_key"></a> [lambda\_package\_key](#input\_lambda\_package\_key) | The object key for the lambda distribution. If given, the value is used as the key in lieu of the value constructed using `lambda_package` and `lambda_version`. | `string` | `null` | no |
 | <a name="input_lambda_s3_bucket"></a> [lambda\_s3\_bucket](#input\_lambda\_s3\_bucket) | The name of the S3 bucket used to store the Lambda builds. | `string` | n/a | yes |
@@ -155,4 +156,4 @@ No modules.
 | <a name="output_update_lambda_function_iam_role_name"></a> [update\_lambda\_function\_iam\_role\_name](#output\_update\_lambda\_function\_iam\_role\_name) | Name of the Anti-Virus Definitions lambda role. |
 | <a name="output_update_lambda_function_name"></a> [update\_lambda\_function\_name](#output\_update\_lambda\_function\_name) | The Anti-Virus Definitions lambda function name. |
 | <a name="output_update_lambda_function_version"></a> [update\_lambda\_function\_version](#output\_update\_lambda\_function\_version) | Current version of the Anti-Virus Definitions lambda function. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
