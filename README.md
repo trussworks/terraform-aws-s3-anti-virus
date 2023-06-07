@@ -34,11 +34,6 @@ Creates the following resources for anti-virus scanning:
 * S3 Event to trigger function on object creation
 * AWS Lambda function to scan S3 object and send alert to slack if any objects are infected and quarantined.
 
-## Terraform Versions
-
-Terraform 0.13 and newer. Pin module version to `~> 3.X`. Submit pull-requests to `main` branch.
-
-Terraform 0.12. Pin module version to `~> 2.X`. Submit pull-requests to `terraform012` branch.
 
 ## Usage
 
