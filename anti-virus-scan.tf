@@ -194,6 +194,8 @@ resource "aws_lambda_function" "main_scan" {
     }
   }
 
+  architectures = [var.platform]
+
   tags = merge(
     {
       "Name" = var.name_scan

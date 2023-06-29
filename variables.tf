@@ -124,3 +124,9 @@ variable "cloudwatch_kms_arn" {
   type        = string
   default     = ""
 }
+
+variable "platform" {
+  description = "Instruction set architecture for your Lambda function. Valid values are 'x86_64' and 'arm64'"
+  type        = string
+  default     = "arm64"
+}

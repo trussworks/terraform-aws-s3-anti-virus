@@ -141,6 +141,8 @@ resource "aws_lambda_function" "main_update" {
     }
   }
 
+  architectures = [var.platform]
+
   tags = merge(
     {
       "Name" = var.name_update
