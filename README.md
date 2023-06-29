@@ -68,13 +68,13 @@ module "s3_anti_virus" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
 
 ## Modules
 
@@ -110,6 +110,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_activate_s3_event_notification"></a> [activate\_s3\_event\_notification](#input\_activate\_s3\_event\_notification) | true activates the s3 event notification to clamav. default is false | `bool` | `false` | no |
 | <a name="input_av_definition_s3_bucket"></a> [av\_definition\_s3\_bucket](#input\_av\_definition\_s3\_bucket) | Bucket containing antivirus database files. | `string` | n/a | yes |
 | <a name="input_av_definition_s3_prefix"></a> [av\_definition\_s3\_prefix](#input\_av\_definition\_s3\_prefix) | Prefix for antivirus database files. | `string` | `"clamav_defs"` | no |
 | <a name="input_av_delete_infected_files"></a> [av\_delete\_infected\_files](#input\_av\_delete\_infected\_files) | Set it True in order to delete infected values. | `string` | `"False"` | no |
@@ -130,6 +131,7 @@ No modules.
 | <a name="input_name_scan"></a> [name\_scan](#input\_name\_scan) | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | <a name="input_name_update"></a> [name\_update](#input\_name\_update) | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | ARN of the boundary policy to attach to IAM roles. | `string` | `null` | no |
+| <a name="input_platform"></a> [platform](#input\_platform) | Instruction set architecture for your Lambda function. Valid values are 'x86\_64' and 'arm64' | `string` | `"arm64"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_timeout_seconds"></a> [timeout\_seconds](#input\_timeout\_seconds) | Lambda timeout, in seconds | `string` | `300` | no |
 
