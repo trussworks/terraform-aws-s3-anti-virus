@@ -130,3 +130,9 @@ variable "platform" {
   type        = string
   default     = "arm64"
 }
+
+variable "activate_s3_event_notification" {
+  description = "true activates the s3 event notification to clamav. default is false"
+  type        = bool
+  default     = false
+}
