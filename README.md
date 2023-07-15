@@ -132,6 +132,7 @@ No modules.
 | <a name="input_name_update"></a> [name\_update](#input\_name\_update) | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | ARN of the boundary policy to attach to IAM roles. | `string` | `null` | no |
 | <a name="input_platform"></a> [platform](#input\_platform) | Instruction set architecture for your Lambda function. Valid values are 'x86\_64' and 'arm64' | `string` | `"arm64"` | no |
+| <a name="input_s3_event_notification_name"></a> [s3\_event\_notification\_name](#input\_s3\_event\_notification\_name) | s3 event notification name | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_timeout_seconds"></a> [timeout\_seconds](#input\_timeout\_seconds) | Lambda timeout, in seconds | `string` | `300` | no |
 
