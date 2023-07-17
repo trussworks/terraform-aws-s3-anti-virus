@@ -139,7 +139,7 @@ resource "aws_s3_bucket_notification" "main_scan" {
   bucket = element(data.aws_s3_bucket.main_scan.*.id, count.index)
 
   lambda_function {
-    id                  = element(data.aws_s3_bucket.main_scan.*.id, count.index)
+    id                  = var.s3_event_notification_name ? var.s3_event_notification_name : element(data.aws_s3_bucket.main_scan.*.id, count.index)
     lambda_function_arn = aws_lambda_function.main_scan.arn
     events              = ["s3:ObjectCreated:*"]
   }

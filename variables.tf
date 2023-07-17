@@ -136,3 +136,9 @@ variable "activate_s3_event_notification" {
   type        = bool
   default     = false
 }
+
+variable "s3_event_notification_name" {
+  description = "s3 event notification name"
+  type        = string
+  default     = null
+}
