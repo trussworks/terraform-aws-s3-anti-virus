@@ -135,7 +135,7 @@ data "aws_s3_bucket" "main_scan" {
 }
 
 resource "aws_s3_bucket_notification" "main_scan" {
-  count  = length(var.av_scan_buckets)
+  count  = var.skip_s3_notification ? 0 : length(var.av_scan_buckets)
   bucket = element(data.aws_s3_bucket.main_scan.*.id, count.index)
 
   lambda_function {
