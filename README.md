@@ -130,6 +130,7 @@ No modules.
 | <a name="input_name_scan"></a> [name\_scan](#input\_name\_scan) | Name for resources associated with anti-virus scanning | `string` | `"s3-anti-virus-scan"` | no |
 | <a name="input_name_update"></a> [name\_update](#input\_name\_update) | Name for resources associated with anti-virus updating | `string` | `"s3-anti-virus-updates"` | no |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | ARN of the boundary policy to attach to IAM roles. | `string` | `null` | no |
+| <a name="input_skip_s3_notification"></a> [skip\_s3\_notification](#input\_skip\_s3\_notification) | Boolean indicating if the bucket notification should not be added. This module implementation will not operate without a bucket notification. However, since bucket notifications can only be managed once, if an implementer wants additional notifications on the bucket, they must be managed outside this module. If you give this variable as `true`, you *must* add a bucket notification to the lambda given in outputs as `scan_lambda_function_arn`. See [this issue (#510) on the provider](https://github.com/hashicorp/terraform-provider-aws/issues/501#issuecomment-445106037) for more details on the topic. | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_timeout_seconds"></a> [timeout\_seconds](#input\_timeout\_seconds) | Lambda timeout, in seconds | `string` | `300` | no |
 
