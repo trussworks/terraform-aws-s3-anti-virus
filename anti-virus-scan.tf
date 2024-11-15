@@ -88,6 +88,7 @@ data "aws_iam_policy_document" "main_scan" {
 
       actions = [
         "kms:GenerateDataKey",
+        "kms:Decrypt"
       ]
 
       resources = [
