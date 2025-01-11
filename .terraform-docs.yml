@@ -2,7 +2,18 @@ settings:
   html: false
   anchor: false
   escape: false
+  lockfile: false
 formatter: "markdown table"
+
+sections:
+  show:
+    - requirements
+    - providers
+    - modules
+    - data-sources
+    - resources
+    - inputs
+    - outputs
 
 output:
   file: "README.md"
