@@ -124,3 +124,9 @@ variable "cloudwatch_kms_arn" {
   type        = string
   default     = ""
 }
+
+variable "skip_s3_notification" {
+  description = "Boolean indicating if the bucket notification should not be added. This module implementation will not operate without a bucket notification. However, since bucket notifications can only be managed once, if an implementer wants additional notifications on the bucket, they must be managed outside this module. If you give this variable as `true`, you *must* add a bucket notification to the lambda given in outputs as `scan_lambda_function_arn`. See [this issue (#510) on the provider](https://github.com/hashicorp/terraform-provider-aws/issues/501#issuecomment-445106037) for more details on the topic."
+  type        = bool
+  default     = false
+}
