@@ -76,10 +76,6 @@ module "s3_anti_virus" {
 |------|---------|
 | aws | >= 3.0 |
 
-## Modules
-
-No modules.
-
 ## Resources
 
 | Name | Type |

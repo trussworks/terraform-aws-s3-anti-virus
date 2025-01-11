@@ -3,6 +3,7 @@ settings:
   anchor: false
   escape: false
   lockfile: false
+  hide-empty: true
 formatter: "markdown table"
 
 sections:
