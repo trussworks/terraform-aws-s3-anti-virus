@@ -10,6 +10,9 @@ repos:
         args:
           - --autofix
       - id: trailing-whitespace
+      - id: check-symlinks
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.43.0
@@ -23,6 +26,3 @@ repos:
       - id: terraform_docs
         args:
           - --args=--config=.terraform-docs.yml
-          - --hook-config=--path-to-file=.README.md
-          - --hook-config=--add-to-existing-file=true
-          - --hook-config=--create-file-if-not-exist=true
