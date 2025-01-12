@@ -1,7 +1,7 @@
 {
   "extends": [
     "config:base",
-    ":disableDependencyDashboard"
+    "helpers:pinGitHubActionDigests"
   ],
   "labels": [
     "dependencies"
