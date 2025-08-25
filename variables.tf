@@ -119,6 +119,12 @@ variable "av_delete_infected_files" {
   default     = "False"
 }
 
+variable "av_skip_clean_objects" {
+  description = "Set it False in order scan objects marked as clean with metadata"
+  type        = string
+  default     = "True"
+}
+
 variable "cloudwatch_kms_arn" {
   description = "The arn of the kms key used for encrypting the cloudwatch log groups created by this module."
   type        = string
