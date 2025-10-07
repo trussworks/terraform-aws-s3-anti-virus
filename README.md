@@ -68,13 +68,13 @@ module "s3_anti_virus" {
 | Name | Version |
 |------|---------|
 | terraform | >= 1.0 |
-| aws | >= 3.0 |
+| aws | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.0 |
+| aws | >= 6.0 |
 
 ## Resources
 
